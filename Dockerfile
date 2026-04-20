@@ -27,7 +27,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+
+# Install Prisma CLI globally in the runner
+RUN npm install -g prisma@6
 
 # Create data directory for persistent SQLite
 RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
@@ -36,4 +38,4 @@ USER nextjs
 EXPOSE 3000
 
 # Run migrations then start the app
-CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
+CMD ["sh", "-c", "prisma migrate deploy && node server.js"]
