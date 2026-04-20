@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /private/
+Disallow: /api/
+
+Sitemap: https://miniboutique.ro/sitemap.xml

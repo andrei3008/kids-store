@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.gitignore
+DESIGN.md
+CLAUDE.md
+.claude
+.env
+.env.local
+.env*.local
+dev.db
+docker-compose.dev.yml
+Dockerfile.dev
