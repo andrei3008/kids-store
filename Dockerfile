@@ -20,12 +20,13 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy Prisma schema, migrations, engine and seed
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+# Copy ALL node_modules (needed for seed: bcryptjs, @prisma/client, etc.)
+COPY --from=builder /app/node_modules ./node_modules
 
-# Install Prisma CLI + tsx (to run seed.ts) globally
+# Copy Prisma schema and migrations
+COPY --from=builder /app/prisma ./prisma
+
+# Install Prisma CLI + tsx globally
 RUN npm install -g prisma@6 tsx
 
 # Create data directory for persistent SQLite
