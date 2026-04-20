@@ -1,6 +1,6 @@
 services:
   app:
-    image: kids-store:latest
+    image: ghcr.io/andrei3008/kids-store:latest
     container_name: kids-store
     ports:
       - "8015:3000"
