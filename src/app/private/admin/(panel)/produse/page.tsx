@@ -146,7 +146,7 @@ export default function AdminProductsPage() {
                     <td className="p-3">
                       <div className="flex gap-2">
                         <Link
-                          href={`/admin/produse/${p.id}`}
+                          href={`/private/admin/produse/${p.id}`}
                           className="text-xs px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/80 font-medium"
                         >
                           Editeaza
