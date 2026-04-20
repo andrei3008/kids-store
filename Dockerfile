@@ -20,7 +20,7 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy ALL node_modules (needed for seed: bcryptjs, @prisma/client, etc.)
+# Copy ALL node_modules (needed for seed)
 COPY --from=builder /app/node_modules ./node_modules
 
 # Copy Prisma schema and migrations
@@ -34,4 +34,4 @@ RUN mkdir -p /app/data
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "prisma migrate deploy && npx tsx prisma/seed.ts && node server.js"]
+CMD ["sh", "-c", "prisma migrate deploy && node server.js"]
