@@ -4,6 +4,13 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
+  // Skip if already seeded
+  const count = await prisma.category.count();
+  if (count > 0) {
+    console.log("Database already seeded, skipping.");
+    return;
+  }
+
   console.log("Seeding database...");
 
   // Admin user
