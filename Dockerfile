@@ -26,6 +26,10 @@ COPY --from=builder /app/node_modules ./node_modules
 # Copy Prisma schema and migrations
 COPY --from=builder /app/prisma ./prisma
 
+# Copy seed script
+COPY --from=builder /app/seed-prod.sh ./seed-prod.sh
+RUN chmod +x ./seed-prod.sh
+
 # Install Prisma CLI + tsx globally
 RUN npm install -g prisma@6 tsx
 
