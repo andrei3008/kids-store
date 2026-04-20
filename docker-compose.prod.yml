@@ -2,6 +2,7 @@ services:
   app:
     image: ghcr.io/andrei3008/kids-store:latest
     container_name: kids-store
+    user: "0:0"
     ports:
       - "8015:3000"
     environment:
