@@ -20,17 +20,17 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy Prisma schema, migrations, and engine for runtime
+# Copy Prisma schema, migrations, engine and seed
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Install Prisma CLI globally
-RUN npm install -g prisma@6
+# Install Prisma CLI + tsx (to run seed.ts) globally
+RUN npm install -g prisma@6 tsx
 
 # Create data directory for persistent SQLite
 RUN mkdir -p /app/data
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "prisma migrate deploy && node server.js"]
+CMD ["sh", "-c", "prisma migrate deploy && npx tsx prisma/seed.ts && node server.js"]
