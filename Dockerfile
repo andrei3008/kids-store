@@ -13,7 +13,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV HOSTNAME="0.0.0.0"
 
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl su-exec
 
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
@@ -28,14 +28,14 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Install Prisma CLI globally in the runner
+# Install Prisma CLI globally
 RUN npm install -g prisma@6
 
-# Create data directory for persistent SQLite
-RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
+# Copy entrypoint
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
-USER nextjs
 EXPOSE 3000
 
-# Run migrations then start the app
-CMD ["sh", "-c", "prisma migrate deploy && node server.js"]
+# Runs as root — entrypoint fixes perms then drops to nextjs
+ENTRYPOINT ["/app/entrypoint.sh"]
