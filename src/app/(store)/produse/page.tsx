@@ -3,6 +3,7 @@ import ProductCard from "@/components/ProductCard";
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductSearch from "./ProductSearch";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "Produse - MiniBoutique" };
 
 export default async function ProductsPage({

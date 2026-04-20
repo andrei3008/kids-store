@@ -1,6 +1,8 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const categories = [
   { name: "Fete", emoji: "👗", href: "/produse?category=fete" },
   { name: "Baieti", emoji: "🧢", href: "/produse?category=baieti" },

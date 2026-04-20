@@ -3,9 +3,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
-COPY prisma ./prisma/
-RUN npx prisma generate
 COPY . .
+RUN npx prisma generate
 RUN npm run build
 
 # --- Stage 2: Production runner ---
@@ -24,14 +23,14 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy Prisma schema + migrations
+# Copy Prisma schema, migrations, and engine for runtime
 COPY --from=builder /app/prisma ./prisma
-# Copy ALL node_modules (Prisma needs WASM files scattered across node_modules)
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 
-# Fix permissions
-RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data && \
-    chown -R nextjs:nodejs /app/node_modules/.prisma
+# Create data directory for persistent SQLite
+RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
 
 USER nextjs
 EXPOSE 3000

@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import AddToCartButton from "./AddToCartButton";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "Produs - MiniBoutique" };
 
 export default async function ProductPage({

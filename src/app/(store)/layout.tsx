@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function StoreLayout({ children }: { children: React.ReactNode }) {
   const categories = await prisma.category.findMany({
     where: { parentId: null },
