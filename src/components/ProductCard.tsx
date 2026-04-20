@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: any }) {
         </div>
 
         {/* Content — Airbnb listing details style */}
-        <div className="pt-3 pb-1 px-0.5">
+        <div className="p-3">
           <div className="flex items-start justify-between gap-2">
             <h3 className="text-[15px] font-semibold text-near-black leading-snug line-clamp-1" style={{ letterSpacing: "-0.01em" }}>
               {product.name}
